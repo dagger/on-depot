@@ -1,0 +1,25 @@
+name: Alternative Runners
+
+on:
+  # Run the workflow every day at 1AM UTC
+  # That's 2AM CET, 8PM EST & 5PM PST
+  schedule:
+    - cron: "0 1 * * *"
+  # Enable manual trigger for easy debugging
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  elixir-on-depot:
+    uses: ./.github/workflows/_dagger_on_depot.yml
+    with:
+      function: check --targets=sdk/elixir
+      size: "4"
+  elixir-dev-on-depot:
+    uses: ./.github/workflows/_dagger_on_depot.yml
+    with:
+      function: check --targets=sdk/elixir
+      size: "16"
+      dev: true
